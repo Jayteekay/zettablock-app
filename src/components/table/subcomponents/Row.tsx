@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { API } from "../../../types/data/API"
+import EdittableDescription from "./EdittableDescription";
 
 type RowProps = {
     data: API;
@@ -15,7 +16,7 @@ const Row = ({ data }: RowProps) => {
             <td>{data.name}</td>
             <td>{data.operationName}</td>
             <td>{data.type}</td>
-            <td>{data.description}</td>
+            <td><EdittableDescription id={data.id} value={data.description} /></td>
             <td>{data.createdAt}</td>
             <td>{data.updatedAt}</td>
         </tr>
