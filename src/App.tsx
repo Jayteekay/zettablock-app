@@ -1,10 +1,12 @@
-import React from 'react';
+import useFetchAPIs from "./data/useFetchAPIs";
 
 function App() {
+  const data = useFetchAPIs();
   return (
     <div>
-      Zettablock
+      {JSON.stringify(data)}
     </div>
+
   );
 }
 
