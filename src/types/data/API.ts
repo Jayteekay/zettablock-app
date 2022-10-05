@@ -1,7 +1,7 @@
 export interface API {
-    createdAt: Date;
+    createdAt: string;
     name: string;
-    updatedAt: Date;
+    updatedAt: string;
     description: string;
     type: string;
     id: string;

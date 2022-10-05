@@ -1,12 +1,10 @@
-import useFetchAPIs from "./data/useFetchAPIs";
+import APITable from "./components/table/APITable";
 
 function App() {
-  const data = useFetchAPIs();
   return (
-    <div>
-      {JSON.stringify(data)}
-    </div>
-
+    <section>
+      <APITable />
+    </section>
   );
 }
 
