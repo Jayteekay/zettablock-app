@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, MouseEvent } from "react";
+import useDeleteRecord from "../../../data/useDeleteRecord";
 import { API } from "../../../types/data/API"
 import EdittableDescription from "./EdittableDescription";
 
@@ -10,6 +11,13 @@ const Row = ({ data }: RowProps) => {
     const toggleCollapsed = () => {
         setIsCollapsed(value => !value);
     }
+
+    const { handleDelete } = useDeleteRecord({ id: data.id });
+    const handleDeleteClick = (event: MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
+        handleDelete();
+    }
+
     return <>
         <tr onClick={toggleCollapsed}>
             <td>{data.id}</td>
@@ -19,6 +27,7 @@ const Row = ({ data }: RowProps) => {
             <td><EdittableDescription id={data.id} value={data.description} /></td>
             <td>{data.createdAt}</td>
             <td>{data.updatedAt}</td>
+            <td><button onClick={handleDeleteClick}>Delete</button></td>
         </tr>
         {!isCollapsed && <tr>
             <td colSpan={7}>

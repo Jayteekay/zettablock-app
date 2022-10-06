@@ -27,6 +27,7 @@ const Table = ({ data }: APITableProps) => {
                 <th>Description</th>
                 <th>Created at</th>
                 <th>Updated at</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
