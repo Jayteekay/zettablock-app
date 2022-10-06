@@ -4,7 +4,8 @@ import Row from "./Row";
 
 type APITableProps = { data: API[] }
 const Table = ({ data }: APITableProps) => {
-    const [sortColumn, setSortColumn] = useState("");
+    const [sortColumn, setSortColumn] = useState<string | null>(null);
+
     const sortBy = (column: string) => setSortColumn(column);
     const displayData = useMemo(() => sortColumn ? data.sort((a, b) => {
         if (sortColumn === "name") {
@@ -18,13 +19,15 @@ const Table = ({ data }: APITableProps) => {
 
     return <table>
         <thead>
-            <th><button onClick={() => sortBy("id")}>ID</button></th>
-            <th><button onClick={() => sortBy("name")}>Name</button></th>
-            <th>Operation Name</th>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Created at</th>
-            <th>Updated at</th>
+            <tr>
+                <th><button onClick={() => sortBy("id")}>ID</button></th>
+                <th><button onClick={() => sortBy("name")}>Name</button></th>
+                <th>Operation Name</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Created at</th>
+                <th>Updated at</th>
+            </tr>
         </thead>
         <tbody>
             {displayData.map(rowData => <Row key={rowData.id} data={rowData} />)}
