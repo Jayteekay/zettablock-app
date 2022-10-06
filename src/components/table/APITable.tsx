@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useFetchAPIs from "../../data/useFetchAPIs";
 import Pagination from "./subcomponents/Pagination";
 import SearchInput from "./subcomponents/SearchInput";
@@ -24,6 +24,11 @@ const APITable = () => {
         const end = (page) * PER_PAGE
         return filteredData?.slice(start, end)
     }, [filteredData, page])
+
+    //Reset Pagination if search value changes
+    useEffect(() => {
+        setPage(1)
+    }, [searchValue])
 
 
     if (isLoading) {
