@@ -15,7 +15,7 @@ const updateField = async <T>(
   });
 
   if (!response.ok) {
-    throw new Error("An error occured while fetching APIs!");
+    throw new Error("An error occured while updating API!");
   }
   return response.json();
 };
