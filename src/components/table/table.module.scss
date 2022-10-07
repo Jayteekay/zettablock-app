@@ -1,4 +1,4 @@
-.container{
+.container {
   padding: 1rem;
 }
 .table {
@@ -29,11 +29,14 @@
     }
   }
   tbody {
-    tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-    tr:hover {
-      background-color: #ddd;
+    tr {
+      cursor: pointer;
+      &:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      &:hover {
+        background-color: #ddd;
+      }
     }
     .delete_button {
       color: white;
@@ -49,6 +52,7 @@
       &_text {
         text-decoration: underline dashed;
         line-height: 20px;
+        cursor: text;
       }
       &_form {
         display: flex;
@@ -75,28 +79,27 @@
   display: flex;
   margin: 1rem 0;
 
-  input{
+  input {
     font-size: 16px;
     padding: 8px;
-
   }
 }
-.pagination{
+.pagination {
   margin-top: 1rem;
-  button{
+  button {
     border-radius: 0;
     border: 0.5px solid #ddd;
     background: white;
     font-size: 16px;
-    &:hover{
+    &:hover {
       background-color: #ebebeb;
     }
   }
 }
-.edit_actions{
+.edit_actions {
   display: flex;
   gap: 1rem;
-  button{
+  button {
     background-color: #e8e4e4;
   }
 }
