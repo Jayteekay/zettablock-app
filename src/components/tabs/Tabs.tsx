@@ -17,7 +17,7 @@ const Tabs = ({ tabs }: TabsProps) => {
     return <div className={styles.tabs}>
         <nav>
             <ul role="tablist">{tabs.map((tab, index) =>
-                <li role="presentation">
+                <li key={tab.id} role="presentation">
                     <button className={tabIndex === index ? styles.active_tab : ""} onClick={() => { setTabIndex(index) }} role="tab" aria-selected={tabIndex === index}>{tab.title}</button>
                 </li>
             )}
