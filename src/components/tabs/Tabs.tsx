@@ -1,5 +1,7 @@
 import { ReactNode, useState } from "react";
 
+import styles from "./tabs.module.scss";
+
 export type ITab = {
     id: string;
     title: string;
@@ -12,11 +14,11 @@ type TabsProps = {
 const Tabs = ({ tabs }: TabsProps) => {
     const [tabIndex, setTabIndex] = useState(0);
 
-    return <div>
+    return <div className={styles.tabs}>
         <nav>
             <ul role="tablist">{tabs.map((tab, index) =>
                 <li role="presentation">
-                    <button onClick={() => { setTabIndex(index) }} role="tab" aria-selected={tabIndex === index}>{tab.title}</button>
+                    <button className={tabIndex === index ? styles.active_tab : ""} onClick={() => { setTabIndex(index) }} role="tab" aria-selected={tabIndex === index}>{tab.title}</button>
                 </li>
             )}
             </ul>

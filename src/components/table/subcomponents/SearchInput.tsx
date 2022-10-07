@@ -1,5 +1,7 @@
 import { ChangeEvent, memo, useEffect, useState } from "react"
 
+import styles from "../table.module.scss";
+
 const SearchInput = ({ onSearch }: { onSearch: (value: string) => void }) => {
     const [value, setValue] = useState("");
     const handleValueChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -16,7 +18,9 @@ const SearchInput = ({ onSearch }: { onSearch: (value: string) => void }) => {
         }
     }, [value, onSearch])
 
-    return <input placeholder="Search by keyword" value={value} onChange={handleValueChange} />
+    return <div className={styles.search}>
+        <input placeholder="Search by keyword" value={value} onChange={handleValueChange} />
+    </div>
 }
 
 export default memo(SearchInput);

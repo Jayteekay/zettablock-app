@@ -1,0 +1,25 @@
+.tabs {
+  padding: 1rem;
+  > nav {
+    ul {
+      display: flex;
+      padding: 0;
+      margin: 0;
+      li {
+        list-style-type: none;
+        button {
+          border-radius: 0;
+          background-color: white;
+          &.active_tab {
+            border: 1px solid black;
+            border-bottom: none;
+            background: #ddd;
+          }
+        }
+      }
+    }
+  }
+  > section {
+    border: 1px solid black;
+  }
+}

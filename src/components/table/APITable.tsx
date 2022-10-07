@@ -4,7 +4,9 @@ import useActions, { ActionContext } from "./hooks/useActions";
 import Pagination from "./subcomponents/Pagination";
 import SearchInput from "./subcomponents/SearchInput";
 import Table from "./subcomponents/Table";
-import EditActions from "./EditActions";
+import EditActions from "./subcomponents/EditActions";
+
+import styles from "./table.module.scss";
 
 const PER_PAGE = 10;
 
@@ -49,7 +51,7 @@ const APITable = () => {
 
 
     return <ActionContext.Provider value={actionsConfig}>
-        <div>
+        <div className={styles.container}>
             <EditActions />
             <SearchInput onSearch={(value) => { setSearchValue(value) }} />
             <Table data={paginatedData} />

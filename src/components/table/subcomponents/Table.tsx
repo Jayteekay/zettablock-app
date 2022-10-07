@@ -2,6 +2,8 @@ import { memo, useMemo, useState } from "react";
 import { API } from "../../../types/data/API";
 import Row from "./Row";
 
+import styles from "../table.module.scss";
+
 type APITableProps = { data: API[] }
 const Table = ({ data }: APITableProps) => {
     const [sortColumn, setSortColumn] = useState<string | null>(null);
@@ -17,11 +19,11 @@ const Table = ({ data }: APITableProps) => {
         return 0;
     }) : data, [sortColumn, data])
 
-    return <table>
+    return <table className={styles.table}>
         <thead>
             <tr>
-                <th><button onClick={() => sortBy("id")}>ID</button></th>
-                <th><button onClick={() => sortBy("name")}>Name</button></th>
+                <th><button onClick={() => sortBy("id")}>ID {sortColumn === "id" ? <>&#8650;</> : <>&#8661;</>}</button></th>
+                <th><button onClick={() => sortBy("name")}>Name {sortColumn === "name" ? <>&#8650;</> : <>&#8661;</>}</button></th>
                 <th>Operation Name</th>
                 <th>Type</th>
                 <th>Description</th>

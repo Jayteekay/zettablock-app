@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, MouseEvent, useState } from "react";
 import useUpdateField from "../../../data/useUpdateField";
+import styles from '../table.module.scss';
 
 type EdittableDescriptionProps = {
     value: string;
@@ -21,7 +22,7 @@ const DescriptionForm = ({ value, id, onSubmit }: DescriptionFormProps) => {
         handleUpdate({ id, description: editValue })
         onSubmit()
     }
-    return <form onClick={(event: MouseEvent<HTMLSpanElement>) => {
+    return <form className={styles.description_form} onClick={(event: MouseEvent<HTMLSpanElement>) => {
         event.stopPropagation();
     }} onSubmit={handleSubmit}>
         <textarea value={editValue} onChange={handleValueChange}></textarea>
@@ -37,7 +38,7 @@ const EdittableDescription = ({ value, id }: EdittableDescriptionProps) => {
         setIsEditting(true);
     }
 
-    return isEditting ? <DescriptionForm onSubmit={() => setIsEditting(false)} value={value} id={id} /> : <span onClick={startEditing}>{value}</span>
+    return isEditting ? <DescriptionForm onSubmit={() => setIsEditting(false)} value={value} id={id} /> : <span className={styles.description_text} onClick={startEditing}>{value}</span>
 }
 
 export default EdittableDescription;

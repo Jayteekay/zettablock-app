@@ -3,6 +3,8 @@ import useDeleteRecord from "../../../data/useDeleteRecord";
 import { API } from "../../../types/data/API"
 import EdittableDescription from "./EdittableDescription";
 
+import styles from "../table.module.scss";
+
 type RowProps = {
     data: API;
 }
@@ -27,10 +29,10 @@ const Row = ({ data }: RowProps) => {
             <td><EdittableDescription id={data.id} value={data.description} /></td>
             <td>{data.createdAt}</td>
             <td>{data.updatedAt}</td>
-            <td><button onClick={handleDeleteClick}>Delete</button></td>
+            <td><button className={styles.delete_button} onClick={handleDeleteClick}>Delete</button></td>
         </tr>
         {!isCollapsed && <tr>
-            <td colSpan={7}>
+            <td colSpan={8}>
                 <pre>{data.query}</pre>
             </td>
         </tr>}

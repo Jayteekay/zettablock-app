@@ -1,0 +1,102 @@
+.container{
+  padding: 1rem;
+}
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  td,
+  th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  thead {
+    button {
+      width: max-content;
+      border: none;
+      background: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #000000;
+      color: white;
+    }
+  }
+  tbody {
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    tr:hover {
+      background-color: #ddd;
+    }
+    .delete_button {
+      color: white;
+      background-color: rgb(199, 61, 61);
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    .description {
+      &_text {
+        text-decoration: underline dashed;
+        line-height: 20px;
+      }
+      &_form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        textarea {
+          font: inherit;
+          border-radius: 8px;
+          padding: 8px;
+          border-color: #ddd;
+          resize: none;
+        }
+        button {
+          color: white;
+          background-color: rgb(61, 199, 105);
+        }
+      }
+    }
+  }
+}
+
+.search {
+  display: flex;
+  margin: 1rem 0;
+
+  input{
+    font-size: 16px;
+    padding: 8px;
+
+  }
+}
+.pagination{
+  margin-top: 1rem;
+  button{
+    border-radius: 0;
+    border: 0.5px solid #ddd;
+    background: white;
+    font-size: 16px;
+    &:hover{
+      background-color: #ebebeb;
+    }
+  }
+}
+.edit_actions{
+  display: flex;
+  gap: 1rem;
+  button{
+    background-color: #e8e4e4;
+  }
+}

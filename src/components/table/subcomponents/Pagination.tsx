@@ -1,4 +1,5 @@
 import { memo } from "react";
+import styles from "../table.module.scss";
 
 type PaginationProps = {
     total: number;
@@ -8,7 +9,7 @@ type PaginationProps = {
 }
 const Pagination = ({ total, perPage, page, setPage }: PaginationProps) => {
     const numberOfPages = Math.ceil(total / perPage);
-    return <section>
+    return <section className={styles.pagination}>
         <button onClick={() => setPage(page - 1)} disabled={page === 1}> &#8249; </button>
         {[...Array(numberOfPages)].map(
             (e, index) =>
