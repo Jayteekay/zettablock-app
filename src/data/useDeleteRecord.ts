@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { ActionContext } from "../components/table/hooks/useActions";
 import { API } from "../types/data/API";
 
 const deleteRecord = async (id: string): Promise<API> => {
@@ -21,6 +23,8 @@ type IUseDeleteRecord = {
 
 const useDeleteRecord = ({ id }: IUseDeleteRecord) => {
   const queryClient = useQueryClient();
+  const { resetActions } = useContext(ActionContext);
+
   const { mutate, isSuccess, isLoading } = useMutation<API, any>(
     () => deleteRecord(id),
     {
@@ -32,6 +36,10 @@ const useDeleteRecord = ({ id }: IUseDeleteRecord) => {
           const newAPIs = oldAPIs.filter((api) => api.id !== id);
           queryClient.setQueryData(["APIs"], () => newAPIs);
         }
+
+        //Reset undo/redo actions when record is deleted to prevent modification of deleted items
+        resetActions();
+
         return { oldAPIs };
       },
       // If the mutation fails, use the context returned from onMutate to roll back

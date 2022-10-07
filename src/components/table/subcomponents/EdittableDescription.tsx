@@ -11,14 +11,14 @@ type DescriptionFormProps = EdittableDescriptionProps & { onSubmit: () => void }
 const DescriptionForm = ({ value, id, onSubmit }: DescriptionFormProps) => {
     const [editValue, setEditValue] = useState(value);
 
-    const { handleUpdate, isLoading } = useUpdateField<string>({ id, field: "description" })
+    const { handleUpdate, isLoading } = useUpdateField()
 
     const handleValueChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setEditValue(event.target.value);
     };
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        handleUpdate(editValue)
+        handleUpdate({ id, description: editValue })
         onSubmit()
     }
     return <form onClick={(event: MouseEvent<HTMLSpanElement>) => {

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { API } from "../../../types/data/API";
 import Row from "./Row";
 
@@ -35,4 +35,4 @@ const Table = ({ data }: APITableProps) => {
         </tbody>
     </table>
 }
-export default Table;
+export default memo(Table);

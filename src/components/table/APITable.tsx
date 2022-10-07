@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import useFetchAPIs from "../../data/useFetchAPIs";
+import useActions, { ActionContext } from "./hooks/useActions";
 import Pagination from "./subcomponents/Pagination";
 import SearchInput from "./subcomponents/SearchInput";
 import Table from "./subcomponents/Table";
+import EditActions from "./EditActions";
 
 const PER_PAGE = 10;
 
@@ -11,6 +13,8 @@ const APITable = () => {
 
     const [searchValue, setSearchValue] = useState("");
     const [page, setPage] = useState(1);
+
+    const actionsConfig = useActions();
 
     const filteredData = useMemo(() => {
         return searchValue ? data?.filter(api => {
@@ -44,11 +48,14 @@ const APITable = () => {
     }
 
 
-    return <div>
-        <SearchInput onSearch={(value) => { setSearchValue(value) }} />
-        <Table data={paginatedData} />
-        <Pagination total={filteredData?.length || 0} perPage={PER_PAGE} page={page} setPage={setPage} />
-    </div>
+    return <ActionContext.Provider value={actionsConfig}>
+        <div>
+            <EditActions />
+            <SearchInput onSearch={(value) => { setSearchValue(value) }} />
+            <Table data={paginatedData} />
+            <Pagination total={filteredData?.length || 0} perPage={PER_PAGE} page={page} setPage={setPage} />
+        </div>
+    </ActionContext.Provider>
 }
 
 export default APITable;

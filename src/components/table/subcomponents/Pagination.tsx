@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 type PaginationProps = {
     total: number;
     perPage: number;
@@ -17,4 +19,4 @@ const Pagination = ({ total, perPage, page, setPage }: PaginationProps) => {
     </section>
 }
 
-export default Pagination;
+export default memo(Pagination);

@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react"
+import { ChangeEvent, memo, useEffect, useState } from "react"
 
 const SearchInput = ({ onSearch }: { onSearch: (value: string) => void }) => {
     const [value, setValue] = useState("");
@@ -19,4 +19,4 @@ const SearchInput = ({ onSearch }: { onSearch: (value: string) => void }) => {
     return <input placeholder="Search by keyword" value={value} onChange={handleValueChange} />
 }
 
-export default SearchInput;
+export default memo(SearchInput);
