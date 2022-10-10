@@ -11,6 +11,9 @@ The project contains the implementation of table that displays data fetched from
 - Pagination
 - Ability to undo and redo description changes
 
+## Deployed project
+[https://keen-semifreddo-6cadf9.netlify.app/](https://keen-semifreddo-6cadf9.netlify.app/)
+
 ## Running the project
 
 In the project directory, you can run:
