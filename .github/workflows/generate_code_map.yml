@@ -1,0 +1,114 @@
+name: Generate and Deploy Codemap
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+      - feature/*
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Add notification at the start
+      - name: Notify workflow start
+        env:
+          SPRUNGG_API_URL: ${{ secrets.SPRUNGG_CODE_MAP_BASE_URL }}
+          SPRUNGG_API_KEY: ${{ secrets.SPRUNGG_CODE_MAP_API_KEY }}
+          REPO_URL: ${{ secrets.SPRUNGG_CODE_MAP_REPO_URL }}
+        run: |
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $SPRUNGG_API_KEY" \
+            --data '{
+              "repository": {
+                "html_url": "'"$REPO_URL"'"
+              },
+              "workflow_run": {
+                "id": "'"$GITHUB_RUN_ID"'",
+                "html_url": "'"$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"'",
+                "name": "'"$GITHUB_WORKFLOW"'",
+                "status": "pending"
+              }
+            }' \
+            "$SPRUNGG_API_URL/github/webhooks/workflow-run"
+
+      # Step 1: Check out the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Step 3: Install the sprungg-code-mapper package
+      - name: Install sprungg-code-mapper
+        run: |
+          npm install -g @sprungg/code-mapper
+
+      # Step 4: Generate Codemap data using sprungg-code-mapper CLI
+      - name: Generate Codemap Data
+        run: |
+          # Generate data and save it to mapper-output.json
+          npx @sprungg/code-mapper . --git --format json --output mapper-output.json
+
+      - name: Print JSON output for debugging
+        run: |
+          cat mapper-output.json
+
+      - name: Deploy data to API
+        env:
+          SPRUNGG_API_URL: ${{ secrets.SPRUNGG_CODE_MAP_BASE_URL }} # Secure API URL
+          SPRUNGG_API_KEY: ${{ secrets.SPRUNGG_CODE_MAP_API_KEY }} # Secure API key for authentication
+          REPO_URL: ${{ secrets.SPRUNGG_CODE_MAP_REPO_URL }} # Repository URL for Sprungg reference
+          
+        run: |
+          # Prepare the JSON payload with the existing mapper-output.json file
+          echo '{"repoUrl": "'"$REPO_URL"'", "codemapData":' > payload.json
+          cat mapper-output.json >> payload.json
+          echo '}' >> payload.json
+          
+          # Use the file with curl
+          curl -X POST -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $SPRUNGG_API_KEY" \
+            --data-binary @payload.json \
+            "$SPRUNGG_API_URL/github/save-code-mapper-output"
+          
+          # Clean up the temporary file
+          rm -f payload.json
+
+      # Step 6: Clean up generated file
+      - name: Clean up generated files
+        run: |
+          rm -f mapper-output.json
+
+      - name: Notify workflow status
+        if: always()
+        env:
+          SPRUNGG_API_URL: ${{ secrets.SPRUNGG_CODE_MAP_BASE_URL }}
+          SPRUNGG_API_KEY: ${{ secrets.SPRUNGG_CODE_MAP_API_KEY }}
+          REPO_URL: ${{ secrets.SPRUNGG_CODE_MAP_REPO_URL }}
+        run: |
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $SPRUNGG_API_KEY" \
+            --data '{
+              "repository": {
+                "html_url": "'"$REPO_URL"'"
+              },
+              "workflow_run": {
+                "id": "'"$GITHUB_RUN_ID"'",
+                "html_url": "'"$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"'",
+                "name": "'"$GITHUB_WORKFLOW"'",
+                "status": "completed"
+              }
+            }' \
+            "$SPRUNGG_API_URL/github/webhooks/workflow-run"
